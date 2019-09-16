@@ -9,3 +9,7 @@ df = pd.DataFrame(columns=['A', 'B', 'C'])
 ```
 df.loc[~df['A'].isnull()]
 ```
+### Get the rows when multiple conditions are met
+```
+df.loc[(df['sex']=='Male') & (df['smoker'] == 'Yes') & (df['day'] == 'Sat')]
+```
