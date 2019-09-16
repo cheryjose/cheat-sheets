@@ -13,3 +13,11 @@ df.loc[~df['A'].isnull()]
 ```
 df.loc[(df['sex']=='Male') & (df['smoker'] == 'Yes') & (df['day'] == 'Sat')]
 ```
+### Find a column value satisfying a condition
+```
+df.loc[df['total_bill'] > 40, 'total_bill']
+```
+### Find sum of a column value
+```
+sum(df.loc[df['total_bill'] > 40, 'total_bill'])
+```
