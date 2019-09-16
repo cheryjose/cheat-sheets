@@ -37,3 +37,8 @@ df_new.drop('tip%', axis=1)
 ```
 df_new.drop(['tip%','tip'], axis=1)
 ```
+### Find Min, Max, Median, Mean, Sum of a column
+```
+import numpy as np
+np.sum(df_new['tip'])
+```
