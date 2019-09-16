@@ -21,3 +21,11 @@ df.loc[df['total_bill'] > 40, 'total_bill']
 ```
 sum(df.loc[df['total_bill'] > 40, 'total_bill'])
 ```
+### Display selected columns in dataframe
+```
+df[['total_bill', 'tip', 'tip%']]
+```
+### Create a new column from result of calculation using exiting columns
+```
+df['tip%'] = (df['tip'] % df['total_bill']) * 100
+```
