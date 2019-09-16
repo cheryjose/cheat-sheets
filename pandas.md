@@ -52,3 +52,7 @@ np.any((df_new['tip'] > 2) & (df_new['tip'] <10))
 import numpy as np
 np.all((df_new['tip'] > 0.1) & (df_new['tip'] <100))
 ```
+### Apply a formula to all rows in a column
+```
+df['tip'] =  df['tip'].apply(lambda x: x + 10)
+```
