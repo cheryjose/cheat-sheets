@@ -42,3 +42,13 @@ df_new.drop(['tip%','tip'], axis=1)
 import numpy as np
 np.sum(df_new['tip'])
 ```
+### Check if any of the column value satisfies a condition
+```
+import numpy as np
+np.any((df_new['tip'] > 2) & (df_new['tip'] <10))
+```
+### Check if all of the column value satisfies a condition
+```
+import numpy as np
+np.all((df_new['tip'] > 0.1) & (df_new['tip'] <100))
+```
