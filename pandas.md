@@ -29,3 +29,11 @@ df[['total_bill', 'tip', 'tip%']]
 ```
 df['tip%'] = (df['tip'] % df['total_bill']) * 100
 ```
+### Drop a column from dataframe
+```
+df_new.drop('tip%', axis=1)
+```
+### Drop multiple columns from dataframe
+```
+df_new.drop(['tip%','tip'], axis=1)
+```
