@@ -69,3 +69,7 @@ np.all((df_new['tip'] > 0.1) & (df_new['tip'] <100))
 ```
 df['tip'] =  df['tip'].apply(lambda x: x + 10)
 ```
+### Sort a dataframe by values of a column or multiple
+```
+df_truck_transactions.sort_values(by=['LoadedDateTime','DumpedDateTime'])
+```
