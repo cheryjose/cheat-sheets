@@ -73,3 +73,12 @@ df['tip'] =  df['tip'].apply(lambda x: x + 10)
 ```
 df_truck_transactions.sort_values(by=['LoadedDateTime','DumpedDateTime'])
 ```
+### Add to an existing pandas series
+#### For before
+```
+pd.Series([0, 100]).append(df_truck_10['BestTonnes'])
+```
+#### For after
+```
+df_truck_10['BestTonnes'].append(pd.Series([0, 100]))
+```
