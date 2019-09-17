@@ -9,6 +9,19 @@ df = pd.DataFrame(columns=['A', 'B', 'C'])
 ```
 df.loc[~df['A'].isnull()]
 ```
+
+### Disply top 100 results from a dataframe
+```
+df.head(100)
+```
+### Display last 100 results from a dataframe
+```
+df.tail(100)
+```
+### Display top 10 results of a dataframe column
+```
+df.top(10)['A']
+```
 ### Get the rows when multiple conditions are met
 ```
 df.loc[(df['sex']=='Male') & (df['smoker'] == 'Yes') & (df['day'] == 'Sat')]
