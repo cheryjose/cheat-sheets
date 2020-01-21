@@ -1,0 +1,7 @@
+1. sudo apt-get update
+2. Install vim package sudo apt-get install vim
+3. Install Vundle and install YouCompleteMe (for intellisense), follow instructions below
+http://unixnme.blogspot.com/2017/03/how-to-install-youcompleteme-vim-plugin.html
+a. clone Vundle project
+b. update ~/.vimrc
+c. add YouComp
