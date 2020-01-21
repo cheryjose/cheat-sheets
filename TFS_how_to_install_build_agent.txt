@@ -1,0 +1,14 @@
+0. create a personal access token using login assigned for build agent (It could be done using going to security -> in Azure DevOps (TFS) user avatar)
+0.1 go to Project Settings and from Pipelines -> Agent Pools, create a new agent pool
+0.2 assign required users and roles to Roles for pool mercury
+1. ssh to build agent
+2. copy agent script tar file from microsoft vsts-agent-linux-x64-2.144.2.tar.gz (Is available for download from project settings, Pipelines -> Agent pools)
+3. extract the file
+4. run ./config.sh
+5. enter server url as https://tfs.fmgl.com.au/tfs
+6. enter personal access token created from first step, y7nimlmqoy3fnwsmxxxxxxxxxxxxxxxxxxxxxx
+7. enter agent pool name (mercury)
+8. give a new agent name (mercury-build-agent)
+9. enter for work folder  as _work
+10. run sudo ./svc.sh install
+11. run sudo ./svc.sh start
