@@ -1,0 +1,13 @@
+1) install modbus slave simulator for linux from using the steps described for linux 
+https://www.modbusdriver.com/diagslave.html
+
+2) install socat to simulate serial ports
+sudo apt-get install socat
+
+eg: run following command to get a serial port /dev/ttyS11
+sudo socat PTY,link=/dev/ttyS10 PTY,link=/dev/ttyS11
+
+3) run the modbus slave simulator
+eg: sudo ./diagslave -m rtu -a 1 -b 9600 -d 8 -s 1 -p none '/dev/ttyS10'
+
+4) run the modbus server code with port configured as eg: /dev/ttyS11

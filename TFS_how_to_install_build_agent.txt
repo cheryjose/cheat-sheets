@@ -6,9 +6,15 @@
 3. extract the file
 4. run ./config.sh
 5. enter server url as https://tfs.fmgl.com.au/tfs
-6. enter personal access token created from first step, y7nimlmqoy3fnwsmxxxxxxxxxxxxxxxxxxxxxx
+6. enter personal access token created from first step, zmhoewasd2jpucgrbnsnths7ph3ouwdmp2jzmizvfwgn4sifdaba
 7. enter agent pool name (mercury)
 8. give a new agent name (mercury-build-agent)
 9. enter for work folder  as _work
 10. run sudo ./svc.sh install
 11. run sudo ./svc.sh start
+
+ref https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-linux?view=azure-devops
+
+
+#### install package dependencies
+sudo apt-get install python3-dev gcc libasound2-dev

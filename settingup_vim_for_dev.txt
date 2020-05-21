@@ -4,4 +4,14 @@
 http://unixnme.blogspot.com/2017/03/how-to-install-youcompleteme-vim-plugin.html
 a. clone Vundle project
 b. update ~/.vimrc
-c. add YouComp
+c. add YouCompleteMe to ~/.vimrc, Plugin 'Valloric/YouCompleteMe'
+d. do :PluginInstall from vim
+e. sudo apt-get install build-essential cmake python-dev python3-dev
+f. compile YouCompleteMe project
+	$ cd ~/.vim/bundle/YouCompleteMe
+	$ ./install.py --clang-completer
+
+*** Note *** 
+The ycmd server SHUT DOWN (restart with ':YcmRestartServer'). YCM core library not detected; you need to compile YCM before using it. Follow the instructions in the documentation.
+- this means need to compile YCM by doing
+***

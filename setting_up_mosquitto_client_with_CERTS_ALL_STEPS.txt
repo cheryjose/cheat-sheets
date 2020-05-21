@@ -1,0 +1,75 @@
+import sys
+import time
+import threading
+import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish
+
+
+args = sys.argv
+ended = threading.Event()
+client = mqtt.Client()
+cert_file = "/home/fmg/code/paho_client/rds-combined-ca-bundle.pem"
+
+if len(args) >= 2:
+    sleepTimeSeconds = int(args[1])
+    try:
+        while not ended.is_set():
+            publish.single('mqtt/test', '{"name": "test"}', hostname='3.xxx.xxx.xxx', port=8883, qos=1, tls={"ca_certs": cert_file}),
+            print('published')
+            time.sleep(sleepTimeSeconds)
+    except (KeyboardInterrupt, SystemExit):
+        print('cancelled')
+        ended.set()
+
+
+ip-10-100-0-250
+ec2-13-210-183-25.ap-southeast-2.compute.amazonaws.com
+mqtt***** address ec2-13-210-183-25.ap-southeast-2.compute.amazonaws.com:8883
+
+openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 360
+### With ip address
+openssl x509 -req -in server.csr -extfile <(printf "subjectAltName=IP:127.0.0.1") -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 365
+
+1.  openssl genrsa -des3 -out ca.key 2048
+2.  openssl req -new -x509 -days 1826 -key ca.key -out ca.crt
+3.  openssl genrsa -out server.key 2048
+******* make company name different by a letter, refer Steves guide
+4.  openssl req -new -out server.csr -key server.key
+5.  openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 360
+
+openssl verify -CAfile ca.crt server.crt
+
+
+mosquitto_pub -h ec2-13-210-183-25.ap-southeast-2.compute.amazonaws.com -p 8883 --cafile /home/fmg/certs/ca.crt -t mqtt/test -m 'test'
+count=0;while true; do mosquitto_pub -q 1 -t mqtt/test -m 'count='$count;count=$((count+1));sleep 1;done;
+mosquitto_sub -i mercury-server-01 -c -q 1 -t som/cam/rx
+
+sudo systemctl stop snap.mosquitto.mosquitto.service
+sudo systemctl status snap.mosquitto.mosquitto.service
+sudo journalctl -u snap.mosquitto.mosquitto.service -e -f
+#### purge and reinstall mosquitto and mosquitto-clients
+apt-get install mosquitto mosquitto-clients
+
+
+########### Reference
+http://www.steves-internet-guide.com/mosquitto-tls/
+http://www.steves-internet-guide.com/mosquitto-bridge-encryption/
+http://patriot-geek.blogspot.com/2017/03/mqtt-persistent-and-clean-sessions.html
+https://community.openhab.org/t/clearing-mqtt-retained-messages/58221
+https://pagefault.blog/2020/02/05/how-to-set-up-persistent-storage-for-mosquitto-mqtt-broker/
+http://www.steves-internet-guide.com/mosquitto-bridge-configuration/
+
+################ snap mosquitto 1.6.9 issue (ubuntu)
+snap version of mosquitto is having permission issues in ubuntu in writing to mosquitto.log and mosquitto.db
+fix use apt version with repository pointed to latest versions
+sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
+sudo apt-get update
+
+################  Python can't find module named apt_pkg (Issue with Python 3.7) works with python 3.6.9
+https://askubuntu.com/questions/1126007/python-cant-find-module-named-apt-pkg
+
+
+SSH, TCP, 22, 194.223.179.15/32
+Custom TCP Rule, TCP, 8883, 194.223.179.15/32
+MYSQL/Aurora, TCP, 3306, 194.223.179.15/32
+Custom TCP Rule, TCP, 1883, 194.223.179.15/32

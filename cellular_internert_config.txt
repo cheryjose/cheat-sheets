@@ -1,0 +1,144 @@
+**** as root user ****
+mmcli -L 
+mmcli --bearer 0
+mmcli -m 0
+nmcli dev status
+
+mmcli -m 0 --simple-connect="apn=yesinternet"
+
+nmcli c add type gsm ifname cdc-wdm0 con-name telstra apn telstra.internet
+nmcli con modify telstra ipv4.method auto connection.autoconnect yes
+nmcli con modify telstra ipv4.dns '8.8.8.8'
+nmcli con modify telstra ipv4.ignore-auto-dns 'yes'
+
+nmcli r wwan on
+nmcli r wwan off
+
+### test
+ping -I wwan0 8.8.4.4
+
+### remove a connection 
+nmcli c delete 1e4975c7-83ab-4bd4-b8d1-ab5e826d8013
+### disconnect a bearer
+mmcli -b 0 -x
+### connect a bearer
+mmcli -b 0 -c
+#### list all network connections
+nmcli c
+#### remove a network connection
+nmcli c delete <id>
+
+https://forums.balena.io/t/raspbian-and-pci-cellular/15223/4
+https://blog.soracom.io/beginners-guide-to-iot-cellular-connectivity-on-raspberry-pi-and-linux-devices-55d4f7489adf
+https://www.balena.io/docs/reference/OS/network/2.x/#cellular-modem-setup
+https://www.thegeekdiary.com/how-to-configure-and-manage-network-connections-using-nmcli/
+
+https://www.embeddedpi.com/documentation/3g-4g-modems/raspberry-pi-sierra-wireless-mc7455-modem-raw-ip-qmi-interface-setup
+
+telstra.wap
+telstra.iph
+telstra.internet
+yesinternet
+
+nmcli c up mobile-net
+
+route -n 
+ip route
+nmcli -p con show test-lab
+
+sudo nmcli con add con-name optus ifname cdc-wdm0 type gsm apn yesinternet 
+nmcli con modify optus ipv4.method auto connection.autoconnect yes
+
+
+############### follow
+https://www.cbtechinc.com/wwan-lte-on-hpe-el300-with-linux-and-sierra-wireless-em7565/
+
+mmcli -m 0 --create-bearer='apn="yesinternet"
+
+    mmcli -m 0 -e
+    mmcli -m 0 --create-bearer='apn="myapn"'
+    mmcli -b 0 --connect
+    mmcli -m 0 --delete-bearer=0
+    mmcli -m 0 --create-bearer='apn="myapn"'
+    mmcli -b 1 --connect
+
+
+
+sudo ln -s /whole/path/to/script.extension /bin/weather
+
+
+https://www.balena.io/docs/reference/OS/network/2.x/#cellular-modem-setup
+https://www.balena.io/os/docs/raspberrypi3/getting-started/
+https://www.balena.io/docs/learn/develop/local-mode/
+https://www.balena.io/docs/reference/base-images/base-images-ref/
+balena hacks https://hackmd.io/@garethtdavies/BJNh35uiH 
+
+https://docs.docker.com/engine/install/ubuntu/
+https://docs.docker.com/compose/install/
+https://docs.docker.com/compose/gettingstarted/
+
+**************Docker commands**************
+sudo docker build -t py-proj .
+sudo docker run -it --rm --name running-app py-proj
+sudo docker run -it --rm -p 1883:1883 --name running-app py-proj
+sudo docker images -a
+
+
+sudo docker system prune
+***************** Docker compose support upto 2.1 ***********************
+Unfortunately we only support docker-compose.yml files up to version 2.1, I believe. Here’s also the
+https://forums.balena.io/t/validationerror-unsupported-composition-version/32686/6
+sudo docker image  rm <bb65e3a01c50>
+
+************ for rasberry pi
+curl -sSL https://get.docker.com | sh
+sudo netstat -tulpn | grep :443
+
+https://tewarid.github.io/2019/04/03/installing-and-configuring-the-mosquitto-mqtt-broker.html
+https://medium.com/@isurunuwanthilaka/get-into-mqtt-in-2-minutes-python-docker-5d4e8b55cf1c
+
+
+
+sudo docker run -it --name mosquitto1 -p 1883:1883 eclipse-mosquitto
+sudo docker start -ai mosquitto1
+netstat | grep 5432
+sudo docker run -it --rm --add-host="localhost:172.17.0.1" --name running-app py-proj
+
+
+*************balena commands
+**** balena-cli
+balena push
+** no log display from where push is made --detached
+balena push --detached
+balena ssh <ip>
+balena logs 
+balean logs <ip> --service <service_name>
+** ssh to container
+sudo balena ssh 192.168.137.11 mosquitto
+**** inside terminal
+balena-engine ps
+balena-eninge ps -a
+balena-engine stop <container>
+balena-engine start <container>
+balena-engine kill <container>
+
+************** balena login
+balena login --token <session token>
+https://github.com/balena-io/balena-cli/issues/1458#issuecomment-537535544
+
+************** location where volume bind happen
+/mnt/data/docker/volumes/1_resin-data
+
+****************** gdal issues with Fiona
+https://github.com/petr-k/gdal-python-alpine/blob/master/Dockerfile
+
+
+while true; do mosquitto_pub -h 192.168.137.11 -p 1883 -t som/cam/rx -m '{"message": "hello world"}'; sleep 5; done;
+mosquitto_sub -h 192.168.137.11 -p 1883 -t mercury/neighbours/data
+
+
+*****************sound issues with pygame in container
+https://github.com/balenalabs/balena-sound/issues/9
+https://forums.balena.io/t/having-issues-in-playing-audio-from-a-python-program-running-in-a-container/116758
+
+https://forums.balena.io/t/building-arm-containers-on-x86-machines/25991

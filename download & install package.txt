@@ -1,0 +1,5 @@
+pip download -r requirements.txt -d src_dir
+
+pip install -r requirements.txt --no-index --find-links file://full_path_to_src_dir
+
+linux --find-links file:///home/user/src_dir

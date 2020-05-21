@@ -1,0 +1,13 @@
+1. Create VPC and enable DHCP hostnames
+  a. Enable DNS hostnames
+  b. Enable DNS resolution
+2. Create subnet
+3. Create internet gateway
+4. Create routing table and map internet gateway to inbound traffic
+   destination: 0.0.0.0/0 target internet gateway
+5. Create security group and provide traffic control rules (in bound and out bound)
+6. Create key value pair using open ssl
+7. Create EC2 instance,
+	a) use VPC and Subnet created above.
+	b) enable public option
+*** Netword ACL can be used on top of Security Groups to ALLOW or DENY access to IP Address, Subnets, Ports and Protocols access to the VPC 

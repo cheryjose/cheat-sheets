@@ -1,0 +1,31 @@
+[1:38 PM] Chris Harper
+    can you work on the running at night time and low battery start up to recharge. will need to check what current mode the LP is in and if there are any errors preventing operation. 
+?[1:40 PM] Chris Harper
+    I also would like some way of it to report its fuel qty and hrs run back to a central DB somewhere so we can report to maintenance. I wonder of other V2X nodes can play pass the parcel to get a message back to a server somewhere?
+
+
+[1:46 PM] Chris Harper
+    it needs to go into auto mode X mins after sunset and shut down Y mins after sunset
+
+[1:48 PM] Chris Harper
+    we could even use the Balena CO-processor to shut down the pi during the day and wake it up every hr to check battery level or something
+?[1:48 PM] Chris Harper
+    the night mode would need to be disabled for testing so will need a on off value
+
+
+"auxSensorLowerLimitShutdown": 30,
+"auxSensorUpperLimitShutdown": 22,
+"commonElectricTripAlarm": 3,
+"failToStart": 15,
+"highTempShutdown": 5,
+"lossOfSpeedSignal": 9,
+"lowFuelLevelShutdown": 23,
+"lowOPShutdown": 6,
+"overCurrentShutdown": 14,
+"overFrequencyShutdown": 10,
+"overSpeedShutdown": 7,
+"overVoltageShutdown": 12,
+"tempSensorOpenShutdown": 31,
+"underFrequencyShutdown": 11,
+"underSpeedShutdown": 8,
+"underVoltageShutdown": 13
