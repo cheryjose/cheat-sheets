@@ -40,6 +40,20 @@ openssl x509 -req -in server.csr -extfile <(printf "subjectAltName=IP:127.0.0.1"
 openssl verify -CAfile ca.crt server.crt
 
 
+
+### Overview of Steps
+1. Create a CA key pair
+2. Create CA certificate and use the CA key from step 1 to sign it.
+3. Create a broker key pair don’t password protect.
+4. Create a broker certificate request using key from step 3
+5. Use the CA certificate to sign the broker certificate request from step 4.
+6. Now we should have a CA key file,a CA certificate file, a broker key file, and a broker certificate file.
+7. Place all files in a directory on the broker e.g. certs
+8. Copy the CA certificate file to the client.
+9. Edit the Mosquitto conf file to use the files -details below
+7. Edit the client script to use TLS and the CA certificate. -details below
+
+
 mosquitto_pub -h ec2-13-210-183-25.ap-southeast-2.compute.amazonaws.com -p 8883 --cafile /home/fmg/certs/ca.crt -t mqtt/test -m 'test'
 count=0;while true; do mosquitto_pub -q 1 -t mqtt/test -m 'count='$count;count=$((count+1));sleep 1;done;
 mosquitto_sub -i mercury-server-01 -c -q 1 -t som/cam/rx
