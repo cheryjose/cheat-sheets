@@ -1,0 +1,18 @@
+***** Install docker
+1) curl -sSL https://get.docker.com | sh
+2) sudo usermod -aG docker pi
+
+
+***** Install docker-compose
+1) sudo apt-get install libffi-dev libssl-dev python3-dev python3 python3-pip
+2) sudo apt-get install python-pip
+3) sudo pip3 install docker-compose
+
+ref:
+https://medium.com/@techiebouncer/install-docker-and-docker-compose-on-raspberry-pi-4-raspbian-buster-c5b78b9a0d08
+
+https://jonathanmeier.io/install-docker-and-docker-compose-raspberry-pi/
+
+**NOTE**
+Had to try installing pip this way to work first time
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && sudo python3 get-pip.py

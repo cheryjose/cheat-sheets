@@ -1,0 +1,34 @@
+1) flash image raspbian fin
+https://github.com/balena-os/pi-gen/releases/download/v0.1.0/image_Raspbian-Fin-full.zip
+2) enable ssh by adding file `ssh` in boot folder
+3) find a network port with known ip and connect balena using ethernet
+4) ssh to BalenaFin using known ip
+5) do `sudo apt-get udpate`
+6) do `sudo apt-get upgrade`
+7) do `sudo apt-get install network-manager`
+8) do `sudo apt-get remove modemmanager`
+9) do `sudo reboot now`
+10) after connecting back do `sudo apt-get install snapd`
+11) do `sudo snap install modem-manager`
+12) do `mmcli -m 0 --simple-connect="apn=telstra.internet"`
+13) do `mmcli -m 0 --enable --timeout=120`
+14) do `nmcli c add type gsm ifname cdc-wdm0 con-name telstra apn telstra.internet`
+15) do `nmcli con modify telstra ipv4.method auto connection.autoconnect yes`
+16) do `nmcli r wwan on`
+17) do `nmcli c up telstra`
+18) edit /etc/NetworkManager/NetworkManager.conf:
+
+[main]
+plugins=ifupdown,keyfile
+dhcp=internal
+
+[ifupdown]
+managed=true
+
+19) Edit /etc/dhcpcd.conf, add line:
+
+denyinterfaces wwan0
+
+20) do `sudo systemctl restart dhcpcd`
+21) do `sudo reboot now`
+21) reconnect and try `ping -I wwan0 ibm.com`

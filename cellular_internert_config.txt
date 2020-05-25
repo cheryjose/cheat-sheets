@@ -1,11 +1,33 @@
+sudo apt install snapd
+sudo snap install modem-manager
+
+https://davidxie.net/install-network-manager-on-raspbian
+http://www.intellamech.com/RaspberryPi-projects/rpi_nmcli.html
+https://gist.github.com/jjsanderson/ab2407ab5fd07feb2bc5e681b14a537a
+
+
+
 **** as root user ****
 mmcli -L 
 mmcli --bearer 0
-mmcli -m 0
+1) mmcli -m 0
+
+------------
+sudo nano /etc/ld.so.preload
+
+and commented the offending line out from
+
+/usr/lib/arm-linux-gnueabihf/libarmmem.so
+
+to
+#/usr/lib/arm-linux-gnueabihf/libarmmem.so
+----------------------
+
+2) mmcli -m 0 --simple-connect="apn=telstra.internet"
+3) mmcli -m 0 --enable --timeout=120
+
+
 nmcli dev status
-
-mmcli -m 0 --simple-connect="apn=yesinternet"
-
 nmcli c add type gsm ifname cdc-wdm0 con-name telstra apn telstra.internet
 nmcli con modify telstra ipv4.method auto connection.autoconnect yes
 nmcli con modify telstra ipv4.dns '8.8.8.8'
@@ -97,13 +119,42 @@ sudo netstat -tulpn | grep :443
 https://tewarid.github.io/2019/04/03/installing-and-configuring-the-mosquitto-mqtt-broker.html
 https://medium.com/@isurunuwanthilaka/get-into-mqtt-in-2-minutes-python-docker-5d4e8b55cf1c
 
-
+**** install docker and docker-compose in pi
+https://medium.com/@techiebouncer/install-docker-and-docker-compose-on-raspberry-pi-4-raspbian-buster-c5b78b9a0d08
 
 sudo docker run -it --name mosquitto1 -p 1883:1883 eclipse-mosquitto
 sudo docker start -ai mosquitto1
 netstat | grep 5432
 sudo docker run -it --rm --add-host="localhost:172.17.0.1" --name running-app py-proj
 
+**** docker build
+sudo docker build --tag <image-name> <directory>
+
+**** run docker
+** host network
+docker run --network host --name <name> <image-tag>
+*** run exposing port
+sudo docker run --publish 1883:1883 --name state state-service-img
+*** run with host and port exposed
+sudo docker run --network host --publish 1883:1883 --publish 8883:8883 --name docker-scripts_mercury_state_service_1 docker-scripts_mercury_state_service
+**** save image
+sudo docker save docker-scripts_mercury_state_service > docker-scripts_mercury_state_service.tar
+
+**** export container
+sudo docker export ubuntu > ubuntu_export.tar
+
+*** load saved image
+sudo docker load < docker-scripts_mercury_state_service.tar
+
+*** import container tar
+cat ubuntu_export.tar | sudo docker import - ubuntu:18.04
+
+**** delete all images
+sudo docker system prune 
+sudo docker system prune -a
+
+*** specific
+sudo docker rm <image name/id>
 
 *************balena commands
 **** balena-cli
@@ -129,13 +180,21 @@ https://github.com/balena-io/balena-cli/issues/1458#issuecomment-537535544
 ************** location where volume bind happen
 /mnt/data/docker/volumes/1_resin-data
 
+************** balena release
+balena login 
+balena push dev-balena --source path/to/my-project
+
 ****************** gdal issues with Fiona
 https://github.com/petr-k/gdal-python-alpine/blob/master/Dockerfile
 
-
+sudo curl -O https://github.com/balena-io/balena-cli/releases/download/v11.35.5/balena-cli-v11.35.5-linux-x64-standalone.zip
+unzip balena-cli-v11.35.5-linux-x64-standalone.zip -d .
 while true; do mosquitto_pub -h 192.168.137.11 -p 1883 -t som/cam/rx -m '{"message": "hello world"}'; sleep 5; done;
 mosquitto_sub -h 192.168.137.11 -p 1883 -t mercury/neighbours/data
 
+
+sudo cp -rf balena-cli /usr/share
+sudo ln -s /usr/share/balena-cli/balena /usr/bin/balena
 
 *****************sound issues with pygame in container
 https://github.com/balenalabs/balena-sound/issues/9
